@@ -1,26 +1,42 @@
 package GameOfLife;
 
 class Cell {
-    private int neighbors = 0; // min 0
+    private int neighborsNumber;
+    private boolean isAlive; // 0 is dead, 1 is alive
 
-    private boolean isLife = false; // 0 - dead, 1 - life
-
-    // the method that changes the indicator of life activity
-    public void setLife(){
-        isLife = !isLife;
+    public Cell() {
+        this.isAlive = false;
+        this.neighborsNumber = 0;
     }
 
-    // the method that increases/decreases the number of neighbors
-    public void setNeighbors(Grid.NeighborsUpdate condition){
-        if (condition == Grid.NeighborsUpdate.UP) neighbors++;
-        else neighbors--;
+    /**
+     * Change the indicator of life activity
+     */
+    public void setLifeStatus(){
+        isAlive = !isAlive;
     }
 
-    // the method that returns the life indicator
-    public boolean getLife(){
-        return isLife;
+    /**
+     * Setter for
+     * @param neighborsNumber the neighbors number
+     */
+    public void setNeighborsNumber(int neighborsNumber){
+        this.neighborsNumber = neighborsNumber;
     }
 
-    // the method that returns the number of neighbors
-    public int getNeighbors(){return neighbors;}
+    /**
+     * Returns the life status
+     * @return value of life status
+     */
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    /**
+     * Returns the number of neighbors
+     * @return number of neighbors
+     */
+    public int getNeighborsNumber() {
+        return neighborsNumber;
+    }
 }

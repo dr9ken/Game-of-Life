@@ -1,59 +1,57 @@
 package GameOfLife;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
+import java.awt.*;
 import java.util.List;
-import javax.swing.JFrame;
 
 class Display extends JFrame {
-    // the width and height of cells
-    private final int CELL_WIDTH = 5;
-    private final int CELL_HEIGHT = 5;
-
-    // the width and height of the window
+    /** The list of cells alive */
+    private List<Point> cellList;
+    /** The width of the window */
     private final int SCREEN_WIDTH = 500;
+    /** The height of the window */
     private final int SCREEN_HEIGHT = 500;
 
-    // the list of cells to draw
-    List<Point> cellList;
-
-    // method that initializes the frame
+    /**
+     * Initialize the frame
+     */
     public Display() {
         super("Game of Life");
-
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
-        setLocation((screenSize.width/2) - (SCREEN_WIDTH / 2),
-                (screenSize.height/2) - (SCREEN_HEIGHT / 2));
-
+        setLocation(
+                (screenSize.width / 2) - (SCREEN_WIDTH / 2),
+                (screenSize.height / 2) - (SCREEN_HEIGHT / 2)
+        );
         setResizable(false);
         setUndecorated(true);
         setVisible(true);
     }
 
-    // the method that gets a list of cells to draw
+    /**
+     * Taking new alive cells
+     * @param cellsList - new list of alive cells
+     */
     public void takeCellsList(List<Point> cellsList){
         this.cellList = cellsList;
-        cellsList.toString();
     }
 
     // the method that draws cells
     @Override
     public void repaint() {
-        Graphics2D gridGraphics = (Graphics2D) this.getGraphics();
+        Graphics2D graphics = (Graphics2D) this.getGraphics();
+        graphics.setPaint(Color.BLACK);
+        graphics.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        repaintAliveCells(graphics);
+    }
 
-        gridGraphics.setPaint(Color.BLACK);
-
-        gridGraphics.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        gridGraphics.setPaint(Color.WHITE);
+    private void repaintAliveCells(Graphics2D graphics) {
+        graphics.setPaint(Color.WHITE);
         for (Point cell : cellList) {
-            gridGraphics.fillRect(cell.I * CELL_HEIGHT, cell.J * CELL_WIDTH, CELL_WIDTH, CELL_HEIGHT);
+            int cellSize = 5;
+            graphics.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize);
         }
     }
 }
